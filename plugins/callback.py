@@ -8,7 +8,7 @@ from plugins.dl_button import ddl_call_back
 
 @Client.on_callback_query(filters.regex('^X0$'))
 async def delt(bot, update):
-          await update.delete(True)
+          await update.message.delete(True)
 
 
 @Client.on_callback_query()

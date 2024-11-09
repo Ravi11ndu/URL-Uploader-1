@@ -43,7 +43,7 @@ async def youtube_dl_call_back(bot, update):
             revoke=True
         )
         return False
-    youtube_dl_url = update.message.reply_to_message.text
+    youtube_dl_url = update.reply_to_message.text
     custom_file_name = str(response_json.get("title")) + \
         "_" + youtube_dl_format + "." + youtube_dl_ext
     youtube_dl_username = None
@@ -59,7 +59,7 @@ async def youtube_dl_call_back(bot, update):
             youtube_dl_username = url_parts[2]
             youtube_dl_password = url_parts[3]
         else:
-            for entity in update.message.reply_to_message.entities:
+            for entity in update.reply_to_message.entities:
                 if entity.type == "text_link":
                     youtube_dl_url = entity.url
                 elif entity.type == "url":
@@ -78,7 +78,7 @@ async def youtube_dl_call_back(bot, update):
         logger.info(youtube_dl_url)
         logger.info(custom_file_name)
     else:
-        for entity in update.message.reply_to_message.entities:
+        for entity in update.reply_to_message.entities:
             if entity.type == "text_link":
                 youtube_dl_url = entity.url
             elif entity.type == "url":
@@ -198,11 +198,11 @@ async def youtube_dl_call_back(bot, update):
                     #parse_mode="HTML",
                     duration=duration,
                     thumb=thumbnail,
-                    reply_to_message_id=update.message.reply_to_message.id,
+                    reply_to_message_id=update.reply_to_message.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
                         Translation.UPLOAD_START,
-                        update.message,
+                        update,
                         start_time
                     )
                 )
@@ -214,11 +214,11 @@ async def youtube_dl_call_back(bot, update):
                     thumb=thumbnail,
                     caption=description,
                     #parse_mode="HTML",
-                    reply_to_message_id=update.message.reply_to_message.id,
+                    reply_to_message_id=update.reply_to_message.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
                         Translation.UPLOAD_START,
-                        update.message,
+                        update,
                         start_time
                     )
                 )
@@ -231,11 +231,11 @@ async def youtube_dl_call_back(bot, update):
                     duration=duration,
                     length=width,
                     thumb=thumb_image_path,
-                    reply_to_message_id=update.message.reply_to_message.id,
+                    reply_to_message_id=update.reply_to_message.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
                         Translation.UPLOAD_START,
-                        update.message,
+                        update,
                         start_time
                     )
                 )
@@ -252,11 +252,11 @@ async def youtube_dl_call_back(bot, update):
                     height=height,
                     thumb=thumbnail,
                     supports_streaming=True,
-                    reply_to_message_id=update.message.reply_to_message.id,
+                    reply_to_message_id=update.reply_to_message.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
                         Translation.UPLOAD_START,
-                        update.message,
+                        update,
                         start_time
                     )
                 )

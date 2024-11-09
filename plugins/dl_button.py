@@ -27,6 +27,7 @@ from hachoir.parser import createParser
 # https://stackoverflow.com/a/37631799/4723940
 from PIL import Image
 
+dllprogress=""
 
 async def ddl_call_back(bot, update):
     logger.info(update)
@@ -215,11 +216,14 @@ async def ddl_call_back(bot, update):
             disable_web_page_preview=True
         )
 
+#current_message=""
 
 async def download_coroutine(bot, session, url, file_name, chat_id, message_id, start):
+    #global dllprogress
     downloaded = 0
     display_message = ""
     async with session.get(url, timeout=Config.PROCESS_MAX_TIMEOUT) as response:
+        #global dllprogress
         total_length = int(response.headers["Content-Length"])
         content_type = response.headers["Content-Type"]
         if "text" in content_type and total_length < 500:
@@ -247,7 +251,10 @@ async def download_coroutine(bot, session, url, file_name, chat_id, message_id, 
                     estimated_total_time = elapsed_time + time_to_completion
                     try:
                         current_message = """**Download Status**\nURL: {}\nFile Size: {}\nDownloaded: {}\nETA: {}""".format(url,humanbytes(total_length),humanbytes(downloaded),TimeFormatter(estimated_total_time))
+                        global dllprogress
+                        dllprogress = current_message
                         if current_message != display_message:
+                            #dllprogress = current_message
                             await bot.edit_message_text(
                                 chat_id=chat_id,
                                 message_id=message_id,

@@ -48,8 +48,8 @@ async def ForceSub(bot: Client, update: Message):
                     ]
                 ]
             ),
-            parse_mode="markdown",
-            reply_to_message_id=update.message_id
+            #parse_mode="markdown",
+            reply_to_message_id=update.message.id
         )
         return 400
     except FloodWait as e:

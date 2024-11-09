@@ -38,7 +38,7 @@ async def youtube_dl_call_back(bot, update):
             response_json = json.load(f)
     except (FileNotFoundError) as e:
         await bot.delete_messages(
-            chat_id=update.message.chat.id,
+            chat_id=update.chat.id,
             message_ids=update.id,
             revoke=True
         )
@@ -87,7 +87,7 @@ async def youtube_dl_call_back(bot, update):
                 youtube_dl_url = youtube_dl_url[o:o + l]
     await bot.edit_message_text(
         text=Translation.DOWNLOAD_START,
-        chat_id=update.message.chat.id,
+        chat_id=update.chat.id,
         message_id=update.id
     )
     user = await bot.get_me()
@@ -156,7 +156,7 @@ async def youtube_dl_call_back(bot, update):
     if e_response and ad_string_to_replace in e_response:
         error_message = e_response.replace(ad_string_to_replace, "")
         await bot.edit_message_text(
-            chat_id=update.message.chat.id,
+            chat_id=update.chat.id,
             message_id=update.id,
             text=error_message
         )
@@ -175,14 +175,14 @@ async def youtube_dl_call_back(bot, update):
             file_size = os.stat(download_directory).st_size
         if file_size > Config.TG_MAX_FILE_SIZE:
             await bot.edit_message_text(
-                chat_id=update.message.chat.id,
+                chat_id=update.chat.id,
                 text=Translation.RCHD_TG_API_LIMIT.format(time_taken_for_download, humanbytes(file_size)),
                 message_id=update.id
             )
         else:
             await bot.edit_message_text(
                 text=Translation.UPLOAD_START,
-                chat_id=update.message.chat.id,
+                chat_id=update.chat.id,
                 message_id=update.id
             )
             # ref: message from @JOSPSupport
@@ -192,10 +192,10 @@ async def youtube_dl_call_back(bot, update):
                 duration = await Mdata03(download_directory)
                 thumbnail = await Gthumb01(bot, update)
                 await bot.send_audio(
-                    chat_id=update.message.chat.id,
+                    chat_id=update.chat.id,
                     audio=download_directory,
                     caption=description,
-                    parse_mode="HTML",
+                    #parse_mode="HTML",
                     duration=duration,
                     thumb=thumbnail,
                     reply_to_message_id=update.message.reply_to_message.id,
@@ -209,11 +209,11 @@ async def youtube_dl_call_back(bot, update):
             elif tg_send_type == "file":
                 thumbnail = await Gthumb01(bot, update)
                 await bot.send_document(
-                    chat_id=update.message.chat.id,
+                    chat_id=update.chat.id,
                     document=download_directory,
                     thumb=thumbnail,
                     caption=description,
-                    parse_mode="HTML",
+                    #parse_mode="HTML",
                     reply_to_message_id=update.message.reply_to_message.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
@@ -226,7 +226,7 @@ async def youtube_dl_call_back(bot, update):
                 width, duration = await Mdata02(download_directory)
                 thumbnail = await Gthumb02(bot, update, duration, download_directory)
                 await bot.send_video_note(
-                    chat_id=update.message.chat.id,
+                    chat_id=update.chat.id,
                     video_note=download_directory,
                     duration=duration,
                     length=width,
@@ -243,10 +243,10 @@ async def youtube_dl_call_back(bot, update):
                  width, height, duration = await Mdata01(download_directory)
                  thumbnail = await Gthumb02(bot, update, duration, download_directory)
                  await bot.send_video(
-                    chat_id=update.message.chat.id,
+                    chat_id=update.chat.id,
                     video=download_directory,
                     caption=description,
-                    parse_mode="HTML",
+                    #parse_mode="HTML",
                     duration=duration,
                     width=width,
                     height=height,
@@ -271,7 +271,7 @@ async def youtube_dl_call_back(bot, update):
                 pass
             await bot.edit_message_text(
                 text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(time_taken_for_download, time_taken_for_upload),
-                chat_id=update.message.chat.id,
+                chat_id=update.chat.id,
                 message_id=update.id,
                 disable_web_page_preview=True
             )

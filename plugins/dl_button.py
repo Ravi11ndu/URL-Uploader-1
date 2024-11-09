@@ -225,11 +225,9 @@ async def download_coroutine(bot, session, url, file_name, chat_id, message_id, 
         if "text" in content_type and total_length < 500:
             return await response.release()
         await bot.edit_message_text(
-            chat_id,
-            message_id,
-            text="""Initiating Download
-URL: {}
-File Size: {}""".format(url, humanbytes(total_length))
+            chat_id=chat_id,
+            message_id=message_id,
+            text="""**🔰Initiating Download🔰**\nURL: {}\nFile Size: {}""".format(url, humanbytes(total_length))
         )
         with open(file_name, "wb") as f_handle:
             while True:
@@ -248,20 +246,11 @@ File Size: {}""".format(url, humanbytes(total_length))
                         (total_length - downloaded) / speed) * 1000
                     estimated_total_time = elapsed_time + time_to_completion
                     try:
-                        current_message = """**Download Status**
-URL: {}
-File Size: {}
-Downloaded: {}
-ETA: {}""".format(
-    url,
-    humanbytes(total_length),
-    humanbytes(downloaded),
-    TimeFormatter(estimated_total_time)
-)
+                        current_message = """**Download Status**\nURL: {}\nFile Size: {}\nDownloaded: {}\nETA: {}""".format(url,humanbytes(total_length),humanbytes(downloaded),TimeFormatter(estimated_total_time))
                         if current_message != display_message:
                             await bot.edit_message_text(
-                                chat_id,
-                                message_id,
+                                chat_id=chat_id,
+                                message_id=message_id,
                                 text=current_message
                             )
                             display_message = current_message

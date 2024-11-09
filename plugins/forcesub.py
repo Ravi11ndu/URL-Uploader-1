@@ -30,9 +30,9 @@ async def ForceSub(bot: Client, update: Message):
             await bot.send_message(
                 chat_id=update.from_user.id,
                 text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/JOSPSupport).",
-                parse_mode="markdown",
+                #parse_mode="markdown",
                 disable_web_page_preview=True,
-                reply_to_message_id=update.message_id
+                reply_to_message_id=update.id
             )
             return 400
         else:
@@ -49,7 +49,7 @@ async def ForceSub(bot: Client, update: Message):
                 ]
             ),
             #parse_mode="markdown",
-            reply_to_message_id=update.message.id
+            reply_to_message_id=update.id
         )
         return 400
     except FloodWait as e:

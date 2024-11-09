@@ -73,7 +73,10 @@ async def ddl_call_back(bot, update):
     await bot.edit_message_text(
         text=Translation.DOWNLOAD_START,
         chat_id=update.message.chat.id,
-        message_id=update.message.id
+        message_id=update.message.id,
+        reply_markup=InlineKeyboardMarkup([
+        [InlineKeyboardButton("Progress🚀", callback_data="pr")]
+    ])
     )
     tmp_directory_for_each_user = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id)
     if not os.path.isdir(tmp_directory_for_each_user):

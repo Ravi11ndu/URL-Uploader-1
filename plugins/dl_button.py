@@ -258,11 +258,11 @@ async def download_coroutine(bot, session, url, file_name, chat_id, message_id, 
                         dllprogress = current_message
                         if current_message != display_message:
                             #dllprogress = current_message
-                            await bot.edit_message_text(
-                                chat_id=chat_id,
-                                message_id=message_id,
-                                text=current_message
-                            )
+                            #await bot.edit_message_text(
+                                #chat_id=chat_id,
+                                #message_id=message_id,
+                                #text=current_message
+                            #)
                             display_message = current_message
                     except Exception as e:
                         logger.info(str(e))
